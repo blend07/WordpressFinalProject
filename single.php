@@ -1,67 +1,24 @@
 <?php
- 
-  get_header();
 
-?>
 
+get_header(); ?>
 
 <div class="container">
-
-     
-      <?php
-
-      if(have_posts()):
-        while(have_posts()):the_post();
-
-
-      ?>
-
-      <article id="post" <?php the_ID(); ?> class=<?php post_class(); ?> >
-
-     <h2> <?php the_title(); ?> </h2>
-     <p> <?php the_content(); ?> </p>
-
-     <div>
-        <?php the_post_thumbnail('medium'); ?> <!-- array(width,height) or 'medium' , 'large'..  -->
-     </div>
-
-     <small> <?php the_category(); edit_post_link();  ?> </small>
-
-     
-     <?php
-        if(comments_open()){
-            comments_template();
-        }
-        else{
-            echo "Komentet nuk i kemi te lejuara";     
-        }
-
-      ?>
-
-      </article>
-
-
-
-
-
-      <?php
-      endwhile;
-      endif;
-
-      ?>
-
-
-
+     <div class="page_content">
+        <section class="site-main">            
+                <?php while ( have_posts() ) : the_post(); ?>
+                    <?php get_template_part( 'content', 'single' ); ?>
+                    <span class="left"><?php previous_post_link(); ?></span>    <span class="right"><?php next_post_link(); ?></span>
+                    <?php
+                    
+                    if ( comments_open() || '0' != get_comments_number() )
+                    	comments_template();
+                    ?>
+                <?php endwhile; ?>          
+         </section>       
+        <?php get_sidebar();?>
+       
+        <div class="clear"></div>
+    </div>
 </div>
-
-
-
-
-
-
-
-<?php
-
-   get_footer();
-
-?>   
+<?php get_footer(); ?>

@@ -1,65 +1,39 @@
 <?php
- 
-    get_header(); 
-
-?>
-
- <div class="row">
-
-   <?php get_search_query(); ?> 
-
-  <?php
-
-  if(have_posts()): ?>
-
-  <?php
-    while(have_posts()): the_post();
-
-  ?>
-  <div class="card mb-3">
-
-    <?php
-      
-      if(has_post_thumbnail()){ ?>
-
-      <img style="width:200px; height:200px;" src="<?php echo wp_get_attachment_url(get_post_thumbnail_id($post->ID)); ?>" alt="">
-
-      <?php
-      } else{
-      ?>
-
-<img style="width:200px; height:200px;" src="<?php bloginfo("template_directory");?> ./images/1.png" alt="">
 
 
+get_header(); ?>
 
-<?php
-      }
-?>
-
-  <div class="card-body">
-    <h5 class="card-title"><?php the_title(); ?></h5>
-    <p class="card-text"><?php the_content(); ?></p>
-    <a class="btn btn-primary" href="<?php the_permalink(); ?>">Read More</a>
+<div class="container">
+  <div class="page_content">
+    <section class="site-main">
+      <div class="blog-post">
+        <?php if ( have_posts() ) : ?>
+        <header>
+          <h1 class="entry-title"><?php printf( esc_attr__( 'Search Results for: %s', 'skt-towing' ), '<span>' . get_search_query() . '</span>' ); ?></h1>
+        </header>
+        <?php while ( have_posts() ) : the_post(); ?>
+        <?php get_template_part( 'content', 'search' ); ?>
+        <?php endwhile; ?>
+        <?php  
+                    // Previous/next post navigation.
+                    the_posts_pagination( array(
+                                'mid_size' => 2,
+                                'prev_text' => __( 'Back', 'skt-towing' ),
+                                'next_text' => __( 'Onward', 'skt-towing' ),
+								'screen_reader_text' => __( 'Posts navigation', 'skt-towing' )
+                    ) );
+                    ?>
+        <?php else : ?>
+        <?php get_template_part( 'no-results', 'search' ); ?>
+        <?php endif; ?>
+      </div>
+      <!-- blog-post --> 
+    </section>
+    <?php get_sidebar();?>
+    <div class="clear"></div>
   </div>
-
-
-  </div>
-
-
-
-<?php
-  
-  endwhile;
-endif;
-
-?>
+  <!-- site-aligner --> 
 </div>
+<!-- container -->
 
-
-
-
-<?php
- 
-    get_footer();
-
-?>
+<?php get_footer(); ?>
