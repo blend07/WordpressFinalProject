@@ -2,8 +2,6 @@
  
     get_header(); 
 
-    /* Template Name: Archive */
-
 ?>
 
  <div class="row">
@@ -12,20 +10,10 @@
 
   <?php
 
-$args = [
-  "posts_type" => "post",
-  "post_per_page" => 5
- 
- 
-];
-
-$query = new WP_Query($args);
-
-
-  if($query->have_posts()): ?>
+  if(have_posts()): ?>
 
   <?php
-    while($query->have_posts()): $query->the_post();
+    while(have_posts()): the_post();
 
   ?>
   <div class="card mb-3">
